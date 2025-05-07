@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class LocationService {
   constructor(private api: ApiService) { }
 
-  // Country
+
   getCountries(): Observable<Country[]> {
     return this.api.get<Country[]>('/api/paises');
   }
@@ -26,13 +26,12 @@ export class LocationService {
     return this.api.delete<boolean>(`/api/paises/${id}`);
   }
 
-  // Department 
+
   getDepartments(countryId: number): Observable<Department[]> {
     return this.api.get<Department[]>(`/api/departamentos/${countryId}`);
   }
 
   createDepartment(department: DepartmentCreate): Observable<Department> {
-    debugger
     return this.api.post<Department>('/api/departamentos', department);
   }
 
@@ -44,7 +43,7 @@ export class LocationService {
     return this.api.delete<boolean>(`/api/departamentos/${id}`);
   }
 
-  // City
+
   getCities(departmentId: number): Observable<City[]> {
     return this.api.get<City[]>(`/api/ciudades/${departmentId}`);
   }
@@ -58,7 +57,6 @@ export class LocationService {
   }
 
   deleteCity(id: number): Observable<boolean> {
-    debugger
     return this.api.delete<boolean>(`/api/ciudades/${id}`);
   }
 }

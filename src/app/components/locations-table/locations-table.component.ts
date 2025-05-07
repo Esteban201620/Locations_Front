@@ -49,7 +49,7 @@ export class LocationsTableComponent implements OnInit {
     });
   }
 
-  // Country methods
+  
   addCountry(): void {
     const dialogRef = this.dialogService.openEditDialog({
       type: 'country'
@@ -98,8 +98,7 @@ export class LocationsTableComponent implements OnInit {
     });
   }
 
-  // Department methods
-  // En locations-table.component.ts
+
   addDepartment(countryId: number): void {
     const dialogRef = this.dialogService.openEditDialog({
       type: 'department'
@@ -107,18 +106,18 @@ export class LocationsTableComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Intentando agregar departamento:', result); // ← Verifica esto
+        
         this.locationService.createDepartment({ 
           nombre: result, 
           paisId: countryId 
         }).subscribe({
           next: (newDept) => {
-            console.log('Departamento agregado:', newDept); // ← Verifica esto
-            this.loadData(); // Recargar datos
+            
+            this.loadData();
           },
           error: (err) => {
             console.error('Error adding department:', err);
-            // Muestra un mensaje al usuario
+            
             this.dialogService.openConfirmDialog({
               title: 'Error',
               message: 'No se pudo agregar el departamento: ' + err.message
@@ -164,7 +163,6 @@ export class LocationsTableComponent implements OnInit {
     });
   }
 
-  // City methods
   addCity(departmentId: number): void {
     const dialogRef = this.dialogService.openEditDialog({
       type: 'city'
@@ -203,15 +201,15 @@ export class LocationsTableComponent implements OnInit {
   }
 
   deleteCity(id: number): void {
-    debugger
+    
     const dialogRef = this.dialogService.openConfirmDialog({
       title: 'Eliminar ciudad',
       message: '¿Estás seguro de que deseas eliminar esta ciudad?'
     });
-    debugger
+    
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
-        debugger
+        
         this.locationService.deleteCity(id).subscribe({
           next: () => this.loadData(),
           error: (err) => console.error('Error deleting city:', err)
@@ -219,21 +217,5 @@ export class LocationsTableComponent implements OnInit {
       }
     });
   }
-
-  // getCountryRowSpan(pais: Country): number {
-  //   let totalRows = 0;
-  //   if (pais.departamentos && pais.departamentos.length) {
-  //     pais.departamentos.forEach(dept => {
-  //       if (dept.ciudades && dept.ciudades.length) {
-  //         totalRows += dept.ciudades.length;
-  //       } else {
-  //         totalRows += 1; // Departamento sin ciudades
-  //       }
-  //     });
-  //   } else {
-  //     totalRows = 1; // País sin departamentos
-  //   }
-  //   return totalRows;
-  // }
   
 }
