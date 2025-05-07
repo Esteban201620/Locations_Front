@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>{{title}}</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>{{placeholder}}</mat-label>
+    <input matInput [formControl]="nameControl">
+    <mat-error *ngIf="nameControl.hasError('required')">
+      Este campo es requerido
+    </mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="nameControl.invalid">
+    Guardar
+  </button>
+</mat-dialog-actions>
