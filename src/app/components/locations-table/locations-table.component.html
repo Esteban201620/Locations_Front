@@ -1,103 +1,53 @@
-<div class="table-container">
-  
-  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<div class="locations-container">
+  <div *ngFor="let country of countries" class="country-block">
+    <div class="country-header">
+      <span class="entity-name">{{ country.nombre }}</span>
+      <div class="country-actions">
+        <button mat-icon-button color="primary" (click)="editCountry(country)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteCountry(country.paisId)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-button color="primary" (click)="addDepartment(country.paisId)">
+          <mat-icon>add</mat-icon> Departamento
+        </button>
+      </div>
+    </div>
 
-  <div class="table-responsive">
-    <table mat-table [dataSource]="countries" class="mat-elevation-z8">
-      
-      
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Nombre </th>
-        <td mat-cell *matCellDef="let item">
-          <div class="entity-name">{{ item.nombre }}</div>
-
-          
-          <div *ngIf="item.departamentos" class="sub-entities">
-            <div *ngFor="let dept of item.departamentos" class="department">
-              <div class="entity-name">{{ dept.nombre }}</div>
-
-              
-              <div *ngIf="dept.ciudades" class="sub-entities">
-                <div *ngFor="let city of dept.ciudades" class="city">
-                  <div class="entity-name">{{ city.nombre }}</div>
-                </div>
-              </div>
-            </div>
+    <div class="departments-container">
+      <div *ngFor="let dept of country.departamentos" class="department-block">
+        <div class="department-header">
+          <span class="entity-name">{{ dept.nombre }}</span>
+          <div class="department-actions">
+            <button mat-icon-button color="primary" (click)="editDepartment(dept)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteDepartment(dept.departamentoId)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-button color="primary" (click)="addCity(dept.departamentoId)">
+              <mat-icon>add</mat-icon> Ciudad
+            </button>
           </div>
-        </td>
-      </ng-container>
+        </div>
 
-      
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Acciones </th>
-        <td mat-cell *matCellDef="let item">
-          <div class="actions">
-            
-            <div *ngIf="item.paisId" class="entity-actions">
-              <button mat-icon-button color="primary" (click)="editCountry(item)">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-icon-button color="warn" (click)="deleteCountry(item.paisId)">
-                <mat-icon>delete</mat-icon>
-              </button>
-              <button mat-button color="primary" (click)="addDepartment(item.paisId)">
-                <mat-icon>add</mat-icon> Departamento
-              </button>
-            </div>
-
-            
-            <div *ngIf="item.departamentos" class="sub-entities-actions">
-              <div *ngFor="let dept of item.departamentos" class="department-actions">
-                <button mat-icon-button color="primary" (click)="editDepartment(dept)">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="warn" (click)="deleteDepartment(dept.departamentoId)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-                <button mat-button color="primary" (click)="addCity(dept.departamentoId)">
-                  <mat-icon>add</mat-icon> Ciudad
-                </button>
-              </div>
-            </div>
-
-            
-            <div *ngIf="item.departamentos" class="sub-entities-actions">
-              <div *ngFor="let dept of item.departamentos">
-                <div *ngFor="let city of dept.ciudades" class="city-actions">
-                  <button mat-icon-button color="primary" (click)="editCity(city)">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button mat-icon-button color="warn" (click)="deleteCity(city.ciudadId)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </div>
-              </div>
-            </div>
+        <div class="cities-container">
+          <div *ngFor="let city of dept.ciudades" class="city-block">
+            <span>{{ city.nombre }}</span>
+            <button mat-icon-button color="primary" (click)="editCity(city)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteCity(city.ciudadId)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </div>
-        </td>
-      </ng-container>
-
-      
-      <ng-container matColumnDef="department">
-        <th mat-header-cell *matHeaderCellDef> Departamento </th>
-        <td mat-cell *matCellDef="let item">
-          <div *ngIf="item.departamentos">
-            <div *ngFor="let dept of item.departamentos" class="department">
-              <div class="entity-name">{{ dept.nombre }}</div>
-            </div>
-          </div>
-        </td>
-      </ng-container>
-
-      
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+        </div>
+      </div>
+    </div>
   </div>
 
-  
-  <div class="add-button">
+  <div class="add-country-button">
     <button mat-raised-button color="primary" (click)="addCountry()">
       <mat-icon>add</mat-icon> Agregar País
     </button>
